@@ -1,2 +1,3 @@
 # auto-ring-edu
-Device for automatically filing calls in educational institutions
+RU
+Устройство для автоматической подачи звонков в учебных учреждениях
