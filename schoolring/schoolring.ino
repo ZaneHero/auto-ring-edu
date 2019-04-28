@@ -17,6 +17,11 @@ iarduino_RTC time( RTC_DS3231);
 byte schemes = 2; //Количество схем, кроме 0
 byte serf = EEPROM.read(0);
 byte a;
+int temp = -10;
+char* temptime = "jhgg";
+int temp2 = -10;
+
+
 void setup()
 {
 	a = serf;
@@ -40,7 +45,13 @@ void setup()
 
 int potentiometr() {
 	long value = analogRead(rotation)*10;
-	return value;
+	if (value > 999) {
+		return value;
+	}
+	else {
+		return 10;
+	}
+	
 }
 
 void ring(int leight) {
@@ -51,20 +62,40 @@ void ring(int leight) {
 
 void potentiometer_to_display() {
 	if (potentiometr() < 10000) {
-		lcd.setCursor(14, 1);
-		lcd.print(potentiometr() / 100);
-	}
-	else {
-		lcd.setCursor(13, 1);
-		lcd.print(potentiometr() / 100);
+		if (potentiometr() != temp) {
+			temp = potentiometr();
+			lcd.setCursor(13, 1);
+			lcd.print(" ");
+			lcd.setCursor(14, 1);
+			lcd.print(potentiometr() / 100);
 		}
 	}
+	else {
+		if (potentiometr() > 999) {
+			if (potentiometr() != temp) {
+				lcd.setCursor(13, 1);
+				lcd.print(potentiometr() / 100);
+			}
+		}
+		else {
+			if (potentiometr() != temp) {
+
+				lcd.setCursor(14, 1);
+				lcd.print("10");
+			}
+		}
+
+
+	}
+}
 
 
 void time_to_display() {
-	lcd.setCursor(0, 0);
-	lcd.print(time.gettime("H:i"));
-
+	char* a = time.gettime("H:i");
+	if (a != temptime) {
+		lcd.setCursor(0, 0);
+		lcd.print(time.gettime("H:i"));
+	}
 	lcd.setCursor(6, 0);
 	switch (time.weekday)
 	{
@@ -109,21 +140,26 @@ byte button_check(byte a) {
 	if (digitalRead(button_left)==0) {
 		if (a == 0) {
 			a = schemes;
+			delay(100);
 		}
 		else {
 		a = a - 1;
+		delay(50);
 		}
 	}
 	if (digitalRead(button_right) == 0) {
 		if (a == schemes) {
 			a = 0;
+			delay(100);
 		}
 		else {
 			a = a + 1;
+			delay(100);
 		}
 	}
 	if (digitalRead(button_center)==0) {
 		EEPROM.write(0, a);
+		delay(50);
 	}
 	scheme_to_display(a);
 	return a;
@@ -131,59 +167,148 @@ byte button_check(byte a) {
 
 void scheme_to_display(byte a) {
 	lcd.setCursor(0, 1);
-	switch (a)
-	{
-	case 1:
-	{
-		lcd.print("Standart");
-		break;
-	}
-	case 2:
-	{
-		lcd.print("Custom");
-		break;
-	}
-	
-	case 0: {
-		lcd.print("Voskresene");
-		break;
-	}
+	if (a != temp2) {
+	temp2 = a;
+		switch (a)
+		{
+		case 1:
+		{
+			lcd.print("          ");
+			lcd.setCursor(0, 1);
+			lcd.print("Standart");
+			break;
+		}
+		case 2:
+		{
+			lcd.print("          ");
+			lcd.setCursor(0, 1);
+			lcd.print("Custom");
+			break;
+		}
+
+		case 0: {
+			lcd.print("          ");
+			lcd.setCursor(0, 1);
+			lcd.print("Voskresene");
+			break;
+		}
+		}
 	}
 }
 
 void eeprom_update() {
+	int rrt = EEPROM.read(0);
 	if (time.Hours == 1) {
-		if (time.weekday != 0) {
+		if ((time.weekday != 0) && (temp2!= rrt)) {
 			EEPROM.update(0, default_scheme);
+			lcd.clear();
 			a = default_scheme;
 			lcd.setCursor(0, 1);
 			lcd.print("Standart");
+				if (potentiometr() < 10000) {
+					
+						temp = potentiometr();
+							lcd.setCursor(13, 1);
+							lcd.print('\0');
+							lcd.setCursor(14, 1);
+						lcd.print(potentiometr() / 100);
+					
+				}
+				else {
+						lcd.setCursor(13, 1);
+						lcd.print(potentiometr() / 100);
+				}
+			switch (a)
+			{
+			case 1:
+			{
+				lcd.print("Standart");
+				break;
+			}
+			case 2:
+			{
+				lcd.print("Custom");
+				break;
+			}
+
+			case 0: {
+				lcd.print("Voskresene");
+				break;
+			}
+			}
 		}
+
 		else{
-			EEPROM.update(0, vsc_day_scheme);
-			a = vsc_day_scheme;
-			lcd.setCursor(0, 1);
-			lcd.print("Voskresene");
-			
+			if (temp2 != rrt) {
+				EEPROM.update(0, vsc_day_scheme);
+					a = vsc_day_scheme;
+					lcd.clear();
+					lcd.setCursor(0, 1);
+					lcd.print("Voskresene");
+					if (potentiometr() < 10000) {
+
+						temp = potentiometr();
+							lcd.setCursor(13, 1);
+							lcd.print('\0');
+							lcd.setCursor(14, 1);
+						lcd.print(potentiometr() / 100);
+
+					}
+					else {
+						lcd.setCursor(13, 1);
+						lcd.print(potentiometr() / 100);
+					}
+				switch (a)
+				{
+				case 1:
+				{
+					lcd.print("Standart");
+					break;
+				}
+				case 2:
+				{
+					lcd.print("Custom");
+					break;
+				}
+
+				case 0: {
+					lcd.print("Voskresene");
+					break;
+				}
+				}
+			}
 		}
 	}
 	
 }
 
 void scheme_check(int n) {
+	switch (n)
+	{
+	case 1: {
+	
+		
+	}
+	case 2: {
 
+	}
+	case 0: {
+
+	}
+
+	}
 }
 
 void loop()
 {
 	
-	lcd.clear();
+	//lcd.clear();
 	potentiometer_to_display();
 	time_to_display();
 	a=button_check(a);
 	eeprom_update();
 	scheme_check(a);
-	delay(60);
+	delay(30);
 	
 }
 	
