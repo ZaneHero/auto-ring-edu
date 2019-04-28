@@ -1,0 +1,19 @@
+C:\Users\Zane\AppData\Local\Temp\VMBuilds\schoolring\uno\Release\iarduino_RTC\iarduino_RTC.cpp.o: \
+ C:\Users\Zane\Documents\Arduino\libraries\iarduino_RTC\src\iarduino_RTC.cpp \
+ C:\Users\Zane\Documents\Arduino\libraries\iarduino_RTC\src\iarduino_RTC.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/Arduino.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/binary.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/WCharacter.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/WString.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/HardwareSerial.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/Stream.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/Print.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/Printable.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/USBAPI.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\cores\arduino/Arduino.h \
+ C:\Users\Zane\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.2\variants\standard/pins_arduino.h \
+ C:\Users\Zane\Documents\Arduino\libraries\iarduino_RTC\src\memorysaver.h \
+ C:\Users\Zane\Documents\Arduino\libraries\iarduino_RTC\src\iarduino_RTC_DS1302.h \
+ C:\Users\Zane\Documents\Arduino\libraries\iarduino_RTC\src\iarduino_RTC_DS1307.h \
+ C:\Users\Zane\Documents\Arduino\libraries\iarduino_RTC\src\iarduino_RTC_I2C.h \
+ C:\Users\Zane\Documents\Arduino\libraries\iarduino_RTC\src\iarduino_RTC_DS3231.h
