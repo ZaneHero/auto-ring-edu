@@ -157,6 +157,8 @@ byte button_check(byte a) {
 			delay(100);
 		}
 	}
+
+	
 	if (digitalRead(button_center)==0) {
 		EEPROM.write(0, a);
 		delay(50);
@@ -189,10 +191,18 @@ void scheme_to_display(byte a) {
 		case 0: {
 			lcd.print("          ");
 			lcd.setCursor(0, 1);
-			lcd.print("Voskresene");
+			lcd.print("Subbota");
 			break;
 		}
 		}
+	}
+	if (EEPROM.read(0) != a) {
+		lcd.setCursor(10, 1);
+		lcd.print("#");
+	}
+	else {
+		lcd.setCursor(10, 1);
+		lcd.print(" ");
 	}
 }
 
@@ -202,14 +212,13 @@ void eeprom_update() {
 		if ((time.weekday != 0) && (temp2!= rrt)) {
 			EEPROM.update(0, default_scheme);
 			lcd.clear();
-			a = default_scheme;
 			lcd.setCursor(0, 1);
 			lcd.print("Standart");
 				if (potentiometr() < 10000) {
 					
 						temp = potentiometr();
 							lcd.setCursor(13, 1);
-							lcd.print('\0');
+							lcd.print(" ");
 							lcd.setCursor(14, 1);
 						lcd.print(potentiometr() / 100);
 					
@@ -218,24 +227,6 @@ void eeprom_update() {
 						lcd.setCursor(13, 1);
 						lcd.print(potentiometr() / 100);
 				}
-			switch (a)
-			{
-			case 1:
-			{
-				lcd.print("Standart");
-				break;
-			}
-			case 2:
-			{
-				lcd.print("Custom");
-				break;
-			}
-
-			case 0: {
-				lcd.print("Voskresene");
-				break;
-			}
-			}
 		}
 
 		else{
@@ -244,7 +235,7 @@ void eeprom_update() {
 					a = vsc_day_scheme;
 					lcd.clear();
 					lcd.setCursor(0, 1);
-					lcd.print("Voskresene");
+					lcd.print("Subbota");
 					if (potentiometr() < 10000) {
 
 						temp = potentiometr();
@@ -258,24 +249,6 @@ void eeprom_update() {
 						lcd.setCursor(13, 1);
 						lcd.print(potentiometr() / 100);
 					}
-				switch (a)
-				{
-				case 1:
-				{
-					lcd.print("Standart");
-					break;
-				}
-				case 2:
-				{
-					lcd.print("Custom");
-					break;
-				}
-
-				case 0: {
-					lcd.print("Voskresene");
-					break;
-				}
-				}
 			}
 		}
 	}
